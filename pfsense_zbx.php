@@ -1147,8 +1147,13 @@ function pfz_get_system_value($section){
 //S.M.A.R.T Status
 // Taken from /usr/local/www/widgets/widgets/smart_status.widget.php
 function pfz_get_smart_status(){
-
+	$filename = "/tmp/sysversion.json";
+	$sysVersion = json_decode(file_get_contents($filename), true);
+	if ($sysVersion['installed_version'] >= '24.11') {
+		$devs = get_drive_list();
+	} else {
 	$devs = get_smart_drive_list();
+	}
 	$status = 0;
 	foreach ($devs as $dev)  { ## for each found drive do                
                 $smartdrive_is_displayed = true;
